@@ -29,7 +29,16 @@ import java.util.Date;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+/**
+ * Data model representation of a transaction
+ * @author ngewif
+ *
+ */
 public class Transaction {
+	/**
+	 * Type of transaction, a credit or a debit
+	 * 
+	 */
 	public enum TransactionType {DEBIT, CREDIT};
 	
 	private double mAmount;
@@ -40,13 +49,25 @@ public class Transaction {
 	private Date mTimestamp;
 	private TransactionType mType = TransactionType.DEBIT;
 	
-	
+	/**
+	 * Overloaded constructor. Creates a new transaction instance with the 
+	 * provided data and initializes the rest to default values. 
+	 * @param amount Amount for the transaction
+	 * @param name Name of the transaction
+	 */
 	public Transaction(double amount, String name) {
 		initDefaults();
 		this.mAmount = amount;
 		this.mName = name;
 	}
 	
+	/**
+	 * Overloaded constructor. Creates a new transaction instance with the 
+	 * provided data and initializes the rest to default values. 
+	 * @param amount Amount for the transaction
+	 * @param name Name of the transaction
+	 * @param type Type of transaction
+	 */
 	public Transaction(double amount, String name, TransactionType type){
 		initDefaults();
 		this.mAmount = amount;		
@@ -54,66 +75,118 @@ public class Transaction {
 		this.mName = name;
 	}
 	
+	/**
+	 * Initializes the different fields to their default values.
+	 */
 	private void initDefaults(){
 		this.mTimestamp = new Date();
 		this.mType = TransactionType.DEBIT;
 		mTransactionUID = new UID().toString();
 	}
 	
-	public void setAmount(double mAmount) {
-		this.mAmount = mAmount;
+	/**
+	 * Set the amount of this transaction
+	 * @param mAmount Amount of the transaction
+	 */
+	public void setAmount(double amount) {
+		this.mAmount = amount;
 	}
 
+	/**
+	 * Returns the amount involved in this transaction
+	 * @return Amount in the transaction
+	 */
 	public double getAmount() {
 		return mAmount;
 	}
 	
 	/**
-	 * @return the mName
+	 * Returns the name of the transaction
+	 * @return Name of the transaction
 	 */
 	public String getName() {
 		return mName;
 	}
 
 	/**
-	 * @param mName the mName to set
+	 * Sets the name of the transaction
+	 * @param name String containing name of transaction to set
 	 */
-	public void setName(String mName) {
-		this.mName = mName;
+	public void setName(String name) {
+		this.mName = name;
 	}
 
-	public void setDescription(String mDescription) {
-		this.mDescription = mDescription;
+	/**
+	 * Set short description of the transaction
+	 * @param description String containing description of transaction
+	 */
+	public void setDescription(String description) {
+		this.mDescription = description;
 	}
 
+	/**
+	 * Returns the description of the transaction
+	 * @return String containing description of transaction
+	 */
 	public String getDescription() {
 		return mDescription;
 	}
 
-	public void setTransactionTime(Date timestamp){
+	/**
+	 * Set the time of the transaction
+	 * @param timestamp Time when transaction occurred as {@link Date}
+	 */
+	public void setTime(Date timestamp){
 		this.mTimestamp = timestamp;
 	}
 	
+	/**
+	 * Returns time when transaction occured
+	 * @return {@link Date} object for time when transaction occured
+	 */
 	public Date getTime(){
 		return mTimestamp;
 	}
 	
+	/**
+	 * Sets the type of transaction
+	 * @param type The transaction type 
+	 * @see TransactionType 
+	 */
 	public void setTransactionType(TransactionType type){
 		this.mType = type;
 	}
-	
+		
+	/**
+	 * Returns the type of transaction
+	 * @return Type of transaction
+	 */
 	public TransactionType getTransactionType(){
 		return this.mType;
 	}
 	
+	/**
+	 * Set Unique Identifier for this transaction
+	 * @param mTransactionUID Unique ID string
+	 */
 	public void setUID(String mTransactionUID) {
 		this.mTransactionUID = mTransactionUID;
 	}
 
+	/**
+	 * Returns unique ID string for transaction
+	 * @return String with Unique ID of transaction
+	 */
 	public String getUID() {
 		return mTransactionUID;
 	}
 
+	/**
+	 * Converts transaction to XML DOM corresponding to OFX Statement transaction and 
+	 * returns the element node for the transaction
+	 * @param doc XML document to which transaction should be added
+	 * @return Element in DOM corresponding to transaction
+	 */
 	public Element toXml(Document doc){
 		Element transaction = doc.createElement("STMTTRN");
 		Element type = doc.createElement("TRNTYPE");

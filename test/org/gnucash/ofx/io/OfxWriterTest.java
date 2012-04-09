@@ -1,3 +1,25 @@
+/*
+ * Written By: Ngewi Fet <ngewif@gmail.com>
+ * Copyright (c) 2012 Ngewi Fet
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of
+ * the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, contact:
+ *
+ * Free Software Foundation           Voice:  +1-617-542-5942
+ * 51 Franklin Street, Fifth Floor    Fax:    +1-617-542-2652
+ * Boston, MA  02110-1301,  USA       gnu@gnu.org
+ */
+
 package org.gnucash.ofx.io;
 
 import static org.junit.Assert.assertEquals;
@@ -27,20 +49,20 @@ public class OfxWriterTest {
 		
 		Transaction groc = new Transaction(-22, "Groceries");
 		groc.setUID("65e95e6e:13698c08325:-8000");
-		groc.setTransactionTime(date);
+		groc.setTime(date);
 		Transaction shelf = new Transaction(-200, "Shelf");
 		shelf.setUID("65e95e6e:13698c08325:-7fff");
-		shelf.setTransactionTime(date);
+		shelf.setTime(date);
 		
 		householdAcc.addTransaction(groc);
 		householdAcc.addTransaction(shelf);
 		
 		Transaction ice = new Transaction(-15, "Ice cream");
 		ice.setUID("65e95e6e:13698c08325:-7ffe");	
-		ice.setTransactionTime(date);
+		ice.setTime(date);
 		Transaction hotel = new Transaction(-250, "Hotel");
 		hotel.setUID("65e95e6e:13698c08325:-7ffd");
-		hotel.setTransactionTime(date);
+		hotel.setTime(date);
 		
 		vacationAcc.addTransaction(ice);		
 		vacationAcc.addTransaction(hotel);
