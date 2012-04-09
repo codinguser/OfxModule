@@ -1,5 +1,9 @@
 package org.gnucash.ofx;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.gnucash.ofx.data.Account;
@@ -29,8 +33,11 @@ public class OfxExporter {
 		expenses.addAccount(vacationAcc);
 		
 		try {
-			OfxWriter.write(expenses, "output.ofx");
+			File file = new File("output.ofx");
+			OfxWriter.write(expenses, new FileWriter(file));
 		} catch (ParserConfigurationException e) {			
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 

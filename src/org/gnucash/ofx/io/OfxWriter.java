@@ -1,6 +1,7 @@
 package org.gnucash.ofx.io;
 
 import java.io.File;
+import java.io.Writer;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -20,7 +21,7 @@ import org.w3c.dom.ProcessingInstruction;
 
 public class OfxWriter {
 
-	public static void write(Expenses expenses, String filename)
+	public static void write(Expenses expenses, Writer writer)
 			throws ParserConfigurationException {
 		DocumentBuilderFactory docFactory = DocumentBuilderFactory
 				.newInstance();
@@ -39,7 +40,7 @@ public class OfxWriter {
 					.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
 			DOMSource source = new DOMSource(document);
-			StreamResult result = new StreamResult(new File(filename));
+			StreamResult result = new StreamResult(writer);
 			
 			transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
 			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
