@@ -94,7 +94,7 @@ public class Transaction {
 		this.mTimestamp = timestamp;
 	}
 	
-	public Date getTransactionTime(){
+	public Date getTime(){
 		return mTimestamp;
 	}
 	
@@ -106,11 +106,11 @@ public class Transaction {
 		return this.mType;
 	}
 	
-	public void setTransactionUID(String mTransactionUID) {
+	public void setUID(String mTransactionUID) {
 		this.mTransactionUID = mTransactionUID;
 	}
 
-	public String getTransactionUID() {
+	public String getUID() {
 		return mTransactionUID;
 	}
 
