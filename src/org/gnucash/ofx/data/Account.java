@@ -23,6 +23,7 @@
 package org.gnucash.ofx.data;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -35,9 +36,22 @@ import org.w3c.dom.Element;
 public class Account {
 
 	/**
+	 * The type of account
+	 *
+	 */
+	public enum AccountType {CHECKING, SAVINGS, MONEYMRKT, CREDITLINE};
+	
+	/**
+	 * Account ID
+	 */
+	private String mUID;
+	
+	/**
 	 * Name of this account
 	 */
 	private String mName;
+	
+	private AccountType mAccountType = AccountType.CHECKING;
 	
 	/**
 	 * List of transactions in this account
@@ -50,6 +64,9 @@ public class Account {
 	 */
 	public Account(String name) {
 		this.mName = name;
+		this.mUID = UUID.randomUUID().toString();
+		this.mUID.replaceAll("-", "");
+		this.mUID.replaceAll(":", "");
 	}
 
 	/**
@@ -68,6 +85,31 @@ public class Account {
 		return mName;
 	}
 	
+	/**
+	 * Returns the unique ID of this account
+	 * @return String containing unique ID for the account
+	 */
+	public String getId(){
+		return mUID;
+	}
+	
+	/**
+	 * Get the type of account
+	 * @return {@link AccountType} type of account
+	 */
+	public AccountType getAccountType() {
+		return mAccountType;
+	}
+
+	/**
+	 * Sets the type of account
+	 * @param mAccountType Type of account
+	 * @see AccountType
+	 */
+	public void setAccountType(AccountType mAccountType) {
+		this.mAccountType = mAccountType;
+	}
+
 	/**
 	 * Adds a transaction to this account
 	 * @param transaction {@link Transaction} to be added to the account
@@ -90,6 +132,19 @@ public class Account {
 	 */
 	public ArrayList<Transaction> getTransactions(){
 		return mTransactionsList;
+	}
+	
+	/**
+	 * Returns the aggregate of all transactions in this account.
+	 * It takes into account debit and credit amounts
+	 * @return Aggregate amount of all transactions in account.
+	 */
+	public double getBalance(){
+		double balance = 0;
+		for (Transaction transx : mTransactionsList) {
+			balance += transx.getAmount();
+		}
+		return balance;
 	}
 	
 	/**

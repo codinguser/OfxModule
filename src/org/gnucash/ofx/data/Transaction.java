@@ -23,7 +23,6 @@
 package org.gnucash.ofx.data;
 
 import java.rmi.server.UID;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.w3c.dom.Document;
@@ -90,6 +89,7 @@ public class Transaction {
 	 */
 	public void setAmount(double amount) {
 		this.mAmount = amount;
+		mType = amount < 0 ? TransactionType.DEBIT : TransactionType.CREDIT; 
 	}
 
 	/**
@@ -194,13 +194,12 @@ public class Transaction {
 		transaction.appendChild(type);
 		
 		Element datePosted = doc.createElement("DTPOSTED");
-		datePosted.appendChild(doc.createTextNode(
-				new SimpleDateFormat("yyyy-MM-dd:HH-mm-ss").format(mTimestamp)));
+		datePosted.appendChild(doc.createTextNode(Expenses.getFormattedCurrentTime(mTimestamp.getTime())));
 		transaction.appendChild(datePosted);
 		
 		Element dateUser = doc.createElement("DTUSER");
 		dateUser.appendChild(doc.createTextNode(
-				new SimpleDateFormat("yyyy-MM-dd:HH-mm-ss").format(mTimestamp)));
+				Expenses.getFormattedCurrentTime(mTimestamp.getTime())));
 		transaction.appendChild(dateUser);
 		
 		Element amount = doc.createElement("TRNAMT");
